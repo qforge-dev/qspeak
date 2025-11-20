@@ -1,0 +1,22 @@
+{
+  "noPersona": "Bez Persony",
+  "image": "obraz",
+  "copy": "Kopiuj",
+  "copied": "Skopiowano",
+  "takeScreenshot": "Zrób zrzut ekranu",
+  "copyText": "Kopiuj tekst",
+  "record": "Nagrywaj",
+  "stop": "Zatrzymaj",
+  "close": "Zamknij",
+  "selectPersona": "Wybierz personę",
+  "connected": "Połączony",
+  "disconnected": "Niepołączony",
+  "recentConversations": "Ostatnie rozmowy",
+  "startNewConversationByTalkingOrWriting": "Gotowy do rozmowy? Kliknij na mikrofon lub użyj skrótu klawiszowego, aby rozpocząć nagrywanie lub wpisz wiadomość.",
+  "fileUploadError": "Obecnie obsługiwane są tylko pliki obrazów.",
+  "startNewConversation": "Rozpocznij nową rozmowę",
+  "recentChats": "Ostatnie rozmowy",
+  "switchLanguage": "Przełącz język",
+  "selectLanguage": "Wybierz język",
+  "currentLanguage": "Aktualny język"
+}

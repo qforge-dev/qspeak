@@ -1,0 +1,41 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# qSpeak Project Overview
+
+**qSpeak** is a powerful voice transcription and AI assistant tool built with Tauri, React, TypeScript, and Rust. It provides real-time voice transcription and AI assistance across all applications while keeping voice data completely offline.
+
+## Project Architecture
+
+This is a **Tauri application** with a clear separation between frontend and backend:
+
+### Frontend (React + TypeScript)
+- **Main Entry Points**: [recorder.html](mdc:recorder.html), [settings.html](mdc:settings.html), [onboarding.html](mdc:onboarding.html)
+- **Core Configuration**: [vite.config.ts](mdc:vite.config.ts), [package.json](mdc:package.json)
+- **Source Code**: [src/](mdc:src) directory contains all React components and frontend logic
+- **Styling**: Uses Tailwind CSS with custom configurations in [global.css](mdc:src/global.css)
+- **Internationalization**: i18n setup in [i18n.ts](mdc:src/i18n.ts)
+
+### Backend (Rust + Tauri)
+- **Main Configuration**: [src-tauri/tauri.conf.json](mdc:src-tauri/tauri.conf.json)
+- **Rust Source**: [src-tauri/src/](mdc:src-tauri/src) contains all backend logic
+- **Dependencies**: [src-tauri/Cargo.toml](mdc:src-tauri/Cargo.toml)
+- **Custom Modules**: Audio recording, keyboard handling, screenshot capabilities
+
+## Key Features
+- Real-time voice transcription with offline processing
+- AI assistant with adaptive personas
+- Cross-platform support (Windows, macOS, Ubuntu)
+- MCP (Model Context Protocol) integration
+- Global hotkey support (default: F6)
+- Universal compatibility with any text input application
+
+## Development Stack
+- **Frontend**: React 18, TypeScript, Vite, Tailwind CSS
+- **Backend**: Rust, Tauri 2.0
+- **UI Components**: Radix UI primitives with custom styling
+- **State Management**: React hooks and context
+- **Build Tool**: Vite with Tauri integration
+- **Package Manager**: pnpm

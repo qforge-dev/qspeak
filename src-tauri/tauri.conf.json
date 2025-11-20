@@ -1,0 +1,59 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "qSpeak",
+  "version": "0.2.11",
+  "identifier": "app.qforge.qspeak",
+  "build": {
+    "beforeDevCommand": "pnpm dev",
+    "devUrl": "http://localhost:1420",
+    "beforeBuildCommand": "pnpm build",
+    "frontendDist": "../dist"
+  },
+  "app": {
+    "windows": [],
+    "macOSPrivateApi": true,
+    "security": {
+      "csp": null
+    }
+  },
+  "bundle": {
+    "createUpdaterArtifacts": true,
+    "active": true,
+    "targets": "all",
+    "icon": [
+      "icons/white/Favicons/favicon-32x32.png",
+      "icons/white/Favicons/favicon-64x64.png",
+      "icons/white/Favicons/favicon-128x128.png",
+      "icons/white/Favicons/favicon-310x310.png",
+      "icons/icon.png",
+      "icons/icon.icns",
+      "icons/icon.ico"
+    ],
+    "resources": [
+      "icons/icon.png",
+      "icons/icon.ico",
+      "kobold-configs"
+    ],
+    "macOS": {
+      "minimumSystemVersion": null,
+      "entitlements": "entitlements.plist"
+    },
+    "linux": {
+      "rpm": {
+        "depends": [
+          "webkit2gtk3-devel",
+          "gtk3-devel",
+          "libayatana-appindicator3-devel"
+        ]
+      }
+    }
+  },
+  "plugins": {
+    "updater": {
+      "endpoints": [
+        "https://cdn.crabnebula.app/update/qforge/qspeak/{{target}}-{{arch}}/{{current_version}}"
+      ],
+      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDJDNTQwQkRDRTgxOUZBQ0UKUldUTytobm8zQXRVTEV4blprV3AvU2Jza2l0NnlXdVRIVi9LT2NDdnoycURYS2V6Z2ZPWjlsK2kK"
+    }
+  }
+}

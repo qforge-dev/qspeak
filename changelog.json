@@ -1,0 +1,920 @@
+[
+  {
+    "version": "0.2.11",
+    "title": "WebSocket Improvements and Seamless Server Control",
+    "changes": [
+      "🔌 Updated WebSocket server for improved reliability",
+      "🖥️ Added option to toggle server from the system tray"
+    ],
+    "date": "2025-11-17T20:09:01.480Z"
+  },
+  {
+    "version": "0.2.10",
+    "title": "Introducing WebSocket and CLI Support",
+    "changes": [
+      "🆕 Added qspeak-cli for command-line interactions",
+      "🌐 Implemented websocket server functionality with robust configuration management and connection handling",
+      "💾 Enabled state saving for the websocket server"
+    ],
+    "date": "2025-11-17T19:35:09.543Z"
+  },
+  {
+    "version": "0.2.9",
+    "title": "Improved Packaging and Icon Enhancements",
+    "changes": [
+      "📦 Added RPM package support for easier Linux installation",
+      "🎨 Updated application icon for a refreshed look"
+    ],
+    "date": "2025-08-27T20:17:36.855Z"
+  },
+  {
+    "version": "0.2.8",
+    "title": "Improved Local Model Management and Window Controls",
+    "changes": [
+      "🐛 Fixed issues with downloading and deleting local models",
+      "🪟 Added option to resize the application window"
+    ],
+    "date": "2025-08-11T19:34:25.222Z"
+  },
+  {
+    "version": "0.2.7",
+    "title": "Improved Compatibility on Ubuntu",
+    "changes": [
+      "🐧 Enhanced initialization process for Ubuntu, reducing errors"
+    ],
+    "date": "2025-07-17T09:49:44.182Z"
+  },
+  {
+    "version": "0.2.6",
+    "title": "Improved OpenAI Integration for macOS",
+    "changes": [
+      "🔐 Enhanced conversation handling to support optional OpenAI API key",
+      "💻 Fixed issues related to macOS compatibility with client configuration"
+    ],
+    "date": "2025-07-17T09:24:18.497Z"
+  },
+  {
+    "version": "0.2.5",
+    "title": "New Voxtral Transcription Model Added",
+    "changes": [
+      "🆕 Added the Voxtral transcription model for improved audio processing"
+    ],
+    "date": "2025-07-15T21:11:36.307Z"
+  },
+  {
+    "version": "0.2.4",
+    "title": "New Chat Completion and Smarter Title Generation",
+    "changes": [
+      "💬 Added non-streaming chat completion method",
+      "📝 Improved title generation to use JSON response format"
+    ],
+    "date": "2025-07-15T18:46:58.329Z"
+  },
+  {
+    "version": "0.2.3",
+    "title": "Interactive Messaging and Visual Feedback Updates",
+    "changes": [
+      "✨ Added animated dots and a copy button next to user messages",
+      "🤖 Displayed thinking state to enhance feedback during processing",
+      "🐞 Fixed title generation for history items",
+      "👁️ Displayed thinking process in collapsible view for better visibility"
+    ],
+    "date": "2025-07-14T17:12:42.858Z"
+  },
+  {
+    "version": "0.2.2",
+    "title": "AI Model Customization and Enhanced Tag Interactions",
+    "changes": [
+      "✨ Introduced predefined settings selection for custom models",
+      "🆕 Added model templates for easier configuration",
+      "👤 Enabled example question and answer functionality in personas for better AI persona customization",
+      "📝 Added model editing features with improved UI components",
+      "➕ Enhanced conversation model management with add and delete capabilities",
+      "🌐 Added support for tools and vision in both English and Polish locales",
+      "💡 Conditionally render model details based on conversation model type",
+      "⚡ Improved Markdown component with animation delay utilities and automatic think tag closing",
+      "🎨 Styled think tags and enabled their automatic closing for smoother interactions"
+    ],
+    "date": "2025-07-14T16:04:42.489Z"
+  },
+  {
+    "version": "0.2.1",
+    "title": "Code Cleanup and Maintenance Update",
+    "changes": [],
+    "date": "2025-07-10T08:49:18.506Z"
+  },
+  {
+    "version": "0.2.0",
+    "title": "Animated UI Enhancements and New File Uploads",
+    "changes": [
+      "✨ Added animated dots and shining effects to enhance visual feedback",
+      "🟢 Displayed a status indicator for improved user awareness",
+      "🎨 Introduced several new and improved UI animations, including animated logo and smooth image transitions",
+      "🗂️ Added file upload functionality with metadata support",
+      "🗨️ Added recent chats select feature and a new \"Start new chat\" option",
+      "🌍 Added a preferred language switcher for multilingual users",
+      "🔔 Added a setting to toggle opening the settings window on app start",
+      "🦻 Applied echo cancellation to audio recording",
+      "🐛 Fixed persona switching issue with empty voice commands",
+      "🐛 Fixed scrollbar border and toast theme inconsistencies",
+      "🚫 Disabled window resizing and persona select during message generation",
+      "🔒 Disabled the recording button while generating messages",
+      "🐛 Fixed tooltips and various minor interface bugs for smoother experience"
+    ],
+    "date": "2025-07-10T08:46:31.672Z"
+  },
+  {
+    "version": "0.1.74",
+    "title": "Improved Debug Performance and Refined Features",
+    "changes": [
+      "⚡ Drastically improved compilation speed in debug mode",
+      "🗂️ Updated feature from 'ruhear' to 'qruhear' for better functionality",
+      "➖ Disabled some features for a streamlined experience",
+      "🧹 Removed unused kobold binaries to reduce clutter"
+    ],
+    "date": "2025-06-13T13:13:57.950Z"
+  },
+  {
+    "version": "0.1.73",
+    "title": "UI Improvements and Persona Enhancements",
+    "changes": [
+      "🪟 Fixed window positioning issue on MacOS",
+      "🧑‍💼 Added 'Meeting' persona and improved persona form colors",
+      "🎨 Fixed light mode surface color issues",
+      "🔧 Improved tools updating functionality",
+      "👀 Enabled auto-scroll to active persona when changing"
+    ],
+    "date": "2025-06-12T20:33:31.805Z"
+  },
+  {
+    "version": "0.1.72",
+    "changes": [
+      "🌈 Updated colors in minimized layout for a refreshed appearance.",
+      "🐛 Fixed an issue with the history functionality."
+    ],
+    "date": "2025-06-12T08:17:45.494Z",
+    "title": "Refreshed Colors and History Fix"
+  },
+  {
+    "version": "0.1.71",
+    "changes": [
+      "Added new colors and updated color themes throughout the application.",
+      "Fixed and improved window positioning, including updates when minimized and improvements to tracking window movement.",
+      "Improved error monitoring, including sending user email in error reports.",
+      "Enhanced audio output listening, including the ability to show audio data on a graph.",
+      "Added new fonts and made further design improvements.",
+      "Added more icons to the personas registry.",
+      "Allowed launching the application from dispatch."
+    ],
+    "date": "2025-06-11T17:57:47.088Z",
+    "title": "Fresh Colors, Smarter Windows, and Audio Visuals"
+  },
+  {
+    "version": "0.1.70",
+    "changes": [],
+    "date": "2025-06-10T11:05:39.111Z",
+    "title": "Minor Updates and Improvements"
+  },
+  {
+    "version": "0.1.69",
+    "changes": [
+      "Fixed initialization issue with Rust on macOS."
+    ],
+    "date": "2025-06-10T10:59:01.155Z",
+    "title": "Rust Initialization Fix for macOS"
+  },
+  {
+    "version": "0.1.68",
+    "changes": [
+      "Added support for ARM Linux platforms"
+    ],
+    "date": "2025-06-10T10:53:10.323Z",
+    "title": "ARM Linux Platform Support"
+  },
+  {
+    "version": "0.1.67",
+    "changes": [
+      "Fixed feature compatibility for Linux platforms.",
+      "Updated translations and improved onboarding experience.",
+      "Fixed warnings to improve application stability.",
+      "Improved release script and release-related authentication.",
+      "Fixed cancel functionality in personas feature.",
+      "Updated the release model and fetch releases from API.",
+      "Removed unnecessary audio output input field.",
+      "Added ability to start personas from templates.",
+      "Added new notes persona and set default personas.",
+      "Improved personas form with enhancements and bug fixes.",
+      "Added duplicate persona functionality and updated UI elements for personas.",
+      "Improved persona screen layout.",
+      "Updated popover background styling.",
+      "Added clear button to search input fields.",
+      "Added (or improved) output recording feature.",
+      "Handled addition and editing of personas more effectively.",
+      "Improved textarea styling and updated descriptions.",
+      "Added icons and refined icon styling."
+    ],
+    "date": "2025-06-09T16:26:18.471Z",
+    "title": "Major Personas Upgrades and User Experience Improvements"
+  },
+  {
+    "version": "0.1.66",
+    "changes": [
+      "Updated translations to improve language support.",
+      "Fixed issues in the onboarding process for users."
+    ],
+    "date": "2025-06-09T16:15:00.674Z",
+    "title": "Improved Onboarding and Language Support"
+  },
+  {
+    "version": "0.1.65",
+    "changes": [],
+    "date": "2025-06-09T16:10:32.557Z",
+    "title": "Minor Updates and Improvements"
+  },
+  {
+    "version": "0.1.64",
+    "changes": [
+      "Fixed auth issues for releases.",
+      "Improved ability to cancel personas.",
+      "Started supporting personas from templates.",
+      "Added default and notes personas.",
+      "Enabled adding, editing, and duplicating personas.",
+      "Updated UI elements and styling for personas, including improved icons and textarea.",
+      "Fixed personas form handling.",
+      "Added clear button to search inputs for easier filtering.",
+      "Updated persona and release screens for better usability.",
+      "Added and fixed output recording.",
+      "Updated description texts and textarea styling.",
+      "Fetched releases directly from API instead of static source.",
+      "Removed audio output input feature.",
+      "Enabled turning off 'always on top' option in settings."
+    ],
+    "date": "2025-06-09T09:31:22.070Z",
+    "title": "Enhanced Persona Management and Usability Improvements"
+  },
+  {
+    "version": "0.1.63",
+    "changes": [
+      "Fixed issues with personas cancelation and form handling",
+      "Added ability to start personas from templates",
+      "Added notes persona and default personas",
+      "Handled addition, editing, and duplication of personas with updated UI elements",
+      "Improved icons usage and general UI styling",
+      "Updated descriptions and improved textarea styling",
+      "Added output recording functionality",
+      "Added clear button to search inputs",
+      "Removed audio output input option",
+      "Turned off 'always on top' setting in app settings",
+      "Updated popover background for better appearance",
+      "Refined persona screen layout and interaction"
+    ],
+    "date": "2025-06-09T09:08:26.911Z",
+    "title": "Persona Management Enhancements and UI Improvements"
+  },
+  {
+    "version": "0.1.62",
+    "changes": [
+      "Fixed basic authentication for releases",
+      "Fixed cancellation behavior in personas",
+      "Updated release model",
+      "Removed audio output input field",
+      "Started supporting personas created from templates",
+      "Added notes persona and set up default personas",
+      "Fixed issues in personas form",
+      "Added support for icons and improved styling",
+      "Updated descriptions and improved textarea styling",
+      "Handled addition and editing of personas",
+      "Added duplicate persona functionality and updated related UI elements",
+      "Updated persona screen layout",
+      "Updated popover background styling",
+      "Added clear button to search inputs",
+      "Added (and possibly improved) output recording functionality",
+      "Added output input device to context",
+      "Turned off always on top option in settings"
+    ],
+    "date": "2025-06-09T09:02:57.114Z",
+    "title": "Enhanced Personas, UI Upgrades, and Bug Fixes"
+  },
+  {
+    "version": "0.1.61",
+    "changes": [
+      "Reintroduced the release script to the project."
+    ],
+    "date": "2025-06-05T20:38:30.703Z",
+    "title": "Project Maintenance and Release Process Update"
+  },
+  {
+    "version": "0.1.60",
+    "changes": [
+      "Attempted to perform a new release."
+    ],
+    "date": "2025-06-05T20:35:40.698Z",
+    "title": "Minor Updates and Improvements"
+  },
+  {
+    "version": "0.1.59",
+    "changes": [
+      "Attempt to perform a release.",
+      "Update button styling or functionality."
+    ],
+    "date": "2025-06-05T20:29:53.217Z",
+    "title": "Improved Button Styling and Functionality"
+  },
+  {
+    "version": "0.1.58",
+    "changes": [
+      "Updated the Discord link based on user feedback.",
+      "Fixed issues related to previously updated links."
+    ],
+    "date": "2025-06-05T12:38:16.766Z",
+    "title": "Improved Link Reliability and Updated Discord Access"
+  },
+  {
+    "version": "0.1.57",
+    "changes": [
+      "Added dark mode with new palette and scrollbar styles.",
+      "Implemented light mode (work in progress).",
+      "Enhanced internet connection hook to initialize online status on mount and added online status indicators with connection check functionality.",
+      "Added window management buttons for onboarding and settings.",
+      "Added a clear history button and events for clearing history with styled history view.",
+      "Added a tools page with ToolCard components and finished tools functionality.",
+      "Improved carousel functionality and added filters by personas.",
+      "Redesigned dictionary interface.",
+      "Added personas screen and filters, with various improvements to personas management.",
+      "Added transcription models and finished related models.",
+      "Added settings description for better user understanding."
+    ],
+    "date": "2025-06-05T08:23:32.135Z",
+    "title": "Dark Mode, Tools Page, and Enhanced Persona Features"
+  },
+  {
+    "version": "0.1.56",
+    "changes": [
+      "Moved shortcut asynchronous processing back to improve performance"
+    ],
+    "date": "2025-06-03T10:54:49.535Z",
+    "title": "Improved Performance for Shortcut Processing"
+  },
+  {
+    "version": "0.1.55",
+    "changes": [
+      "Fixed environment variable issues."
+    ],
+    "date": "2025-06-03T10:03:57.332Z",
+    "title": "Environment Variable Bug Fixes"
+  },
+  {
+    "version": "0.1.54",
+    "changes": [
+      "Added a warning for event processing that takes too long.",
+      "Fixed an issue with an unused variable in the code."
+    ],
+    "date": "2025-06-03T10:03:31.171Z",
+    "title": "Event Processing Alerts and Minor Fixes"
+  },
+  {
+    "version": "0.1.53",
+    "changes": [
+      "App now saves data asynchronously to the store and manages window open/close events accordingly.",
+      "Improved window validation handling.",
+      "Fixed sound issues and attempted to fix window positioning.",
+      "Enhanced position saving functionality.",
+      "Added loading and error states for better user experience.",
+      "Removed references to feature flags."
+    ],
+    "date": "2025-06-03T09:55:28.334Z",
+    "title": "Improved Window Management and Enhanced Stability"
+  },
+  {
+    "version": "0.1.52",
+    "changes": [
+      "Added support for additional languages"
+    ],
+    "date": "2025-05-31T13:55:19.882Z",
+    "title": "Expanded Language Support"
+  },
+  {
+    "version": "0.1.51",
+    "changes": [
+      "Removed debug flag to presumably clean up or finalize the code."
+    ],
+    "date": "2025-05-31T13:33:55.049Z",
+    "title": "Minor Updates and Improvements"
+  },
+  {
+    "version": "0.1.50",
+    "changes": [
+      "Fixed an issue in the release script to ensure correct functionality."
+    ],
+    "date": "2025-05-31T12:35:14.200Z",
+    "title": "Bug Fixes and Stability"
+  },
+  {
+    "version": "0.1.49",
+    "changes": [
+      "Updated logging messages for better clarity or detail.",
+      "Enabled sending of debug symbols to Sentry for improved error tracking and diagnostics."
+    ],
+    "date": "2025-05-31T11:51:20.856Z",
+    "title": "Improved Logging and Error Diagnostics"
+  },
+  {
+    "version": "0.1.48",
+    "changes": [
+      "Refactored markdown link handling to use openUrl and simplified URL allowance in capabilities.",
+      "Added a new email assistant persona with specific prompt and style guidelines.",
+      "Fixed default arguments.",
+      "Included system prompt when there are other messages present.",
+      "Fixed conversation multitool calling issue."
+    ],
+    "date": "2025-05-31T10:00:14.015Z",
+    "title": "New Email Assistant Persona and Link Handling Improvements"
+  },
+  {
+    "version": "0.1.47",
+    "changes": [
+      "Fixed the current_time functionality.",
+      "Added tool key autofill feature.",
+      "Added handling for duplicates.",
+      "Enhanced verification code flow by updating email placeholder in messages and adding back navigation functionality.",
+      "Added editing tools.",
+      "Updated shortcut icon.",
+      "Updated message key.",
+      "Allowed opening external URLs.",
+      "Added external MCP integration.",
+      "Renamed client_configs to server_configs for clarity.",
+      "Renamed process to transport for better terminology."
+    ],
+    "date": "2025-05-28T17:13:10.885Z",
+    "title": "New Editing Tools, Email Enhancements, and Integrations"
+  },
+  {
+    "version": "0.1.46",
+    "changes": [
+      "Updated the transformation run step for improved functionality or clarity.",
+      "Refined the wording in the personaTip for better user understanding.",
+      "Added more context to the persona-select step to enhance user guidance.",
+      "Updated the transcription run page with improvements or new features."
+    ],
+    "date": "2025-05-26T17:09:05.997Z",
+    "title": "Improved Guidance and Enhanced User Experience"
+  },
+  {
+    "version": "0.1.45",
+    "changes": [
+      "Updated the release workflow to use bash shell for building the Tauri app"
+    ],
+    "date": "2025-05-26T10:07:03.008Z",
+    "title": "Build Process Improvements"
+  },
+  {
+    "version": "0.1.44",
+    "changes": [
+      "Updated the no_strip functionality.",
+      "Added libayatana support to the Flatpak package.",
+      "Added basic Flatpak packaging.",
+      "Extracted mapping to chat completions types into a separate function for better code organization."
+    ],
+    "date": "2025-05-26T09:59:35.091Z",
+    "title": "Flatpak Support and Improved Code Organization"
+  },
+  {
+    "version": "0.1.43",
+    "changes": [
+      "Fixed an issue (details not specified)"
+    ],
+    "date": "2025-05-23T13:40:24.722Z",
+    "title": "Bug Fixes and Stability"
+  },
+  {
+    "version": "0.1.42",
+    "changes": [
+      "Added a feature to disable a tool before deleting it if it is currently running.",
+      "Refactored MCP processor and fixed issues with toggle functionality.",
+      "Fixed history display and corrected tool display issues.",
+      "Implemented migration for single persona shortcut to reset to new default shortcuts.",
+      "Added a migrations script and introduced a new challenge."
+    ],
+    "date": "2025-05-23T13:14:55.721Z",
+    "title": "Tool Management Upgrades and Interface Fixes"
+  },
+  {
+    "version": "0.1.41",
+    "changes": [
+      "Fixed bugs or issues reported in the code (commit 8f99c3d)."
+    ],
+    "date": "2025-05-22T12:07:38.172Z",
+    "title": "Bug Fixes and Stability Improvements"
+  },
+  {
+    "version": "0.1.40",
+    "changes": [
+      "Removed unused code to improve codebase cleanliness and maintainability."
+    ],
+    "date": "2025-05-22T11:46:08.917Z",
+    "title": "Codebase Cleanup and Maintainability Improvements"
+  },
+  {
+    "version": "0.1.39",
+    "changes": [
+      "Fixed issues in the onboarding conversation to improve user experience"
+    ],
+    "date": "2025-05-22T11:38:08.087Z",
+    "title": "Onboarding Improvements for a Smoother Experience"
+  },
+  {
+    "version": "0.1.38",
+    "changes": [
+      "Added experimental tools and a tools page (work in progress).",
+      "Implemented MCP (multi-channel processing) features including context, view communication, and feature flag.",
+      "Added communication and integration with Firecrawl and Notion MCP.",
+      "Improved and fixed tool calling functionality and updated tool calls.",
+      "Enhanced UI and shortcut handling, including updates to shortcut display and default shortcuts with reset option.",
+      "Fixed OpenAI Whisper language detection issue when language is set to auto.",
+      "Tracked previous recording state and reset conversation after persona changes.",
+      "Fixed launching shortcut issue on Linux.",
+      "Refactored shortcut listener and updated minimize shortcut.",
+      "Improved styling and basic styles for the tools page."
+    ],
+    "date": "2025-05-22T11:25:04.405Z",
+    "title": "New Tools Page, Multi-Channel Features, and UI Enhancements"
+  },
+  {
+    "version": "0.1.37",
+    "changes": [
+      "Prevent app startup failure caused by keybind processor issues.",
+      "Update default position of new recording window."
+    ],
+    "date": "2025-05-21T12:07:27.269Z",
+    "title": "Startup Fixes and Improved Recording Window Placement"
+  },
+  {
+    "version": "0.1.36",
+    "changes": [
+      "Fixed warnings in the code"
+    ],
+    "date": "2025-05-21T10:19:17.498Z",
+    "title": "Bug Fixes and Stability"
+  },
+  {
+    "version": "0.1.35",
+    "changes": [
+      "Updated the models used in settings.",
+      "Modified the onboarding process to include a transcription model picker."
+    ],
+    "date": "2025-05-21T10:16:41.770Z",
+    "title": "Improved Model Selection in Settings and Onboarding"
+  },
+  {
+    "version": "0.1.34",
+    "changes": [
+      "Fixed warnings"
+    ],
+    "date": "2025-05-20T16:44:32.294Z",
+    "title": "Bug Fixes and Stability"
+  },
+  {
+    "version": "0.1.33",
+    "changes": [
+      "Added default content to the application.",
+      "Refactored shortcut key handling to use e.code for non-modifier keys, improving key detection.",
+      "Updated UI borders for a better visual appearance.",
+      "Applied theme to the recording window, enhancing user interface consistency.",
+      "Changed tray icon color based on window background for better visibility.",
+      "Reset conversation after persona changes to reflect new settings.",
+      "Added validation to shortcut recorder, now requiring modifiers to prevent accidental shortcut activation.",
+      "Fixed launching shortcut functionality on Linux platforms.",
+      "Tracked previous recording state to improve recording management.",
+      "Added support for multiple personas and updated related UI flows.",
+      "Updated README with additional information and included a gif to better illustrate features."
+    ],
+    "date": "2025-05-20T16:33:49.886Z",
+    "title": "UI Enhancements, Personas Support, and Shortcut Improvements"
+  },
+  {
+    "version": "0.1.32",
+    "changes": [
+      "Fixed issues with meta shortcuts.",
+      "Removed GPT-4.1 integration or support."
+    ],
+    "date": "2025-05-15T19:09:06.867Z",
+    "title": "Meta Shortcut Fixes and GPT-4.1 Removal"
+  },
+  {
+    "version": "0.1.31",
+    "changes": [
+      "Fixed issue where 'minimized' was incorrectly mapped to 'persona'."
+    ],
+    "date": "2025-05-15T14:07:17.602Z",
+    "title": "Bug Fix for Incorrect Persona Mapping"
+  },
+  {
+    "version": "0.1.30",
+    "changes": [
+      "Fixed issue with window moving functionality.",
+      "Updated logic for the recording window to improve moving behavior."
+    ],
+    "date": "2025-05-15T12:18:28.594Z",
+    "title": "Improved Window Moving and Recording Experience"
+  },
+  {
+    "version": "0.1.29",
+    "changes": [
+      "Fixed an issue with permission imports."
+    ],
+    "date": "2025-05-15T11:35:15.504Z",
+    "title": "Permission Import Bug Fix"
+  },
+  {
+    "version": "0.1.28",
+    "changes": [
+      "Updated and added new challenges.",
+      "Fixed permission issues.",
+      "Updated and improved styles.",
+      "Updated the personas view.",
+      "Displayed circular progress indicators.",
+      "Moved the dictionary to a higher position in the UI.",
+      "Added progress tracking for challenges.",
+      "Improved challenges user interface."
+    ],
+    "date": "2025-05-15T11:32:28.205Z",
+    "title": "New Challenges, Progress Tracking, and UI Enhancements"
+  },
+  {
+    "version": "0.1.27",
+    "changes": [
+      "Added new models to the project"
+    ],
+    "date": "2025-05-14T17:36:17.212Z",
+    "title": "New Models Added to Project"
+  },
+  {
+    "version": "0.1.26",
+    "changes": [
+      "Added a cancel sound feature.",
+      "Updated application icons.",
+      "Implemented canceling of recording functionality.",
+      "Added a working dictionary feature with backend support.",
+      "Introduced minimized dumping and retrieving for efficient data handling."
+    ],
+    "date": "2025-05-14T08:27:27.431Z",
+    "title": "New Recording Controls and Enhanced Data Handling"
+  },
+  {
+    "version": "0.1.25",
+    "changes": [
+      "Fixed issue with bindings"
+    ],
+    "date": "2025-05-13T08:41:01.460Z",
+    "title": "Bug Fixes and Stability"
+  },
+  {
+    "version": "0.1.24",
+    "changes": [
+      "Prevent opening both onboarding and settings at startup to improve initial user experience."
+    ],
+    "date": "2025-05-13T07:51:16.798Z",
+    "title": "Simplified Startup for a Smoother Experience"
+  },
+  {
+    "version": "0.1.23",
+    "changes": [
+      "Moved model order and changed updates to function as links.",
+      "Added new permission checks and request events to improve accessibility."
+    ],
+    "date": "2025-05-13T07:49:54.379Z",
+    "title": "Improved Accessibility and Navigation Updates"
+  },
+  {
+    "version": "0.1.22",
+    "changes": [
+      "Mic permissions now always return true, ensuring the application always believes it has microphone access.",
+      "Fixed the build process on Windows and added functionality to center the application window.",
+      "Renamed the application from 'sayit-tauri' to 'qspeak'."
+    ],
+    "date": "2025-05-13T07:06:17.944Z",
+    "title": "Mic Access Update, Window Centering, and App Rename"
+  },
+  {
+    "version": "0.1.21",
+    "changes": [
+      "Ensure permission checks are always performed during the onboarding step.",
+      "Comment out code related to Windows-specific microphone permissions."
+    ],
+    "date": "2025-05-12T20:53:34.000Z",
+    "title": "Improved Onboarding Security and Microphone Handling"
+  },
+  {
+    "version": "0.1.20",
+    "changes": [
+      "Updated keychain settings in the release workflow to improve security and reliability during deployment."
+    ],
+    "date": "2025-05-12T19:42:15.224Z",
+    "title": "Improved Deployment Security and Reliability"
+  },
+  {
+    "version": "0.1.19",
+    "changes": [
+      "Modify installation process to restore objc2, objc2-foundation, and block2 dependencies only on macOS."
+    ],
+    "date": "2025-05-12T19:40:31.431Z",
+    "title": "Improved macOS Dependency Installation"
+  },
+  {
+    "version": "0.1.18",
+    "changes": [
+      "Added Windows support for microphone permissions.",
+      "Implemented permissions handling for accessibility and microphone access on macOS.",
+      "Improved the text start functionality and start find feature.",
+      "Added functionality to save the previous position."
+    ],
+    "date": "2025-05-12T19:24:15.533Z",
+    "title": "Windows Microphone Support and Accessibility Upgrades"
+  },
+  {
+    "version": "0.1.17",
+    "changes": [
+      "Added a sound effect for paste actions.",
+      "Fixed various UI issues and improved the interface."
+    ],
+    "date": "2025-05-12T16:10:47.094Z",
+    "title": "Enhanced UI and New Paste Sound Effect"
+  },
+  {
+    "version": "0.1.16",
+    "changes": [
+      "Reintroduced support for macOS.",
+      "Displayed a textarea in the transcription onboarding screen and changed the default recording window to be minimized."
+    ],
+    "date": "2025-05-12T15:36:46.454Z",
+    "title": "macOS Support Returns and Transcription Onboarding Updates"
+  },
+  {
+    "version": "0.1.15",
+    "changes": [
+      "Fixed issues with personas feature"
+    ],
+    "date": "2025-05-12T09:23:52.280Z",
+    "title": "Persona Feature Bug Fixes"
+  },
+  {
+    "version": "0.1.14",
+    "changes": [
+      "Fixed keyboard shortcuts and behavior for minimized windows.",
+      "Updated settings related to models.",
+      "Added voice command functionality.",
+      "Updated and improved the user interface.",
+      "Fixed the new conversation feature.",
+      "Updated text copy to use static values.",
+      "Handled multi-step login process.",
+      "Styled login and verification screens.",
+      "Added error handling features.",
+      "Implemented new persona fields for user profiles.",
+      "Proxied transcription requests through server.",
+      "Updated accounts API for better integration.",
+      "Fixed URL handling issues.",
+      "Used user's API token for authentication."
+    ],
+    "date": "2025-05-12T09:19:29.599Z",
+    "title": "Voice Commands, UI Improvements, and Bug Fixes"
+  },
+  {
+    "version": "0.1.13",
+    "changes": [
+      "Removed unused code to improve codebase cleanliness and maintainability."
+    ],
+    "date": "2025-05-11T08:18:18.232Z",
+    "title": "Codebase Cleanup and Maintenance"
+  },
+  {
+    "version": "0.1.12",
+    "changes": [
+      "Added a feature to get the selected text in the conversation.",
+      "Added caching for frontend dependencies to improve performance."
+    ],
+    "date": "2025-05-11T08:17:41.174Z",
+    "title": "Selected Text Feature and Faster Performance"
+  },
+  {
+    "version": "0.1.11",
+    "changes": [
+      "Improved handling of all update scenarios to ensure comprehensive update support."
+    ],
+    "date": "2025-05-10T19:43:11.865Z",
+    "title": "Comprehensive Update Handling Improvements"
+  },
+  {
+    "version": "0.1.10",
+    "changes": [
+      "Introduced a new update to the project."
+    ],
+    "date": "2025-05-10T19:06:35.647Z",
+    "title": "Project Update and Enhancements"
+  },
+  {
+    "version": "0.1.9",
+    "changes": [
+      "Added new components for checking updates and displaying no update available states"
+    ],
+    "date": "2025-05-10T19:02:12.180Z",
+    "title": "Update Checker and No Updates Notification"
+  },
+  {
+    "version": "0.1.8",
+    "changes": [
+      "Refactored update state handling in the App component.",
+      "Improved error handling during the update process.",
+      "Fixed issues with the Tauri updater.",
+      "Added an update context and version state components to manage update states and version information."
+    ],
+    "date": "2025-05-10T18:43:26.292Z",
+    "title": "Improved Update Handling and Stability"
+  },
+  {
+    "version": "0.1.7",
+    "changes": [
+      "Fixed an unspecified issue."
+    ],
+    "date": "2025-05-10T18:06:21.651Z",
+    "title": "Bug Fixes and Stability"
+  },
+  {
+    "version": "0.1.6",
+    "changes": [
+      "Added a 'no_update' state to the application.",
+      "Updated the changelog with release dates and improved the changelog component rendering.",
+      "Started work on release notes."
+    ],
+    "date": "2025-05-10T18:01:56.373Z",
+    "title": "Release Notes Preview and Changelog Enhancements"
+  },
+  {
+    "version": "0.1.5",
+    "date": "2025-05-10T14:48:00.000Z",
+    "changes": [
+      "Improved backend handling for updates.",
+      "Fixed version relationship issues.",
+      "Enhanced toast notification styling to better support dark mode."
+    ],
+    "title": "Improved Update Handling and Dark Mode Notifications"
+  },
+  {
+    "version": "0.1.4",
+    "date": "2025-05-10T14:48:00.000Z",
+    "changes": [
+      "Added a new release script to improve the release process.",
+      "Updated existing scripts to support running on new tags and improved the release script further.",
+      "Handled dark and light theme support for toasts notifications.",
+      "Fixed various bugs and ignored non-critical warnings related to the scripts and notifications system."
+    ],
+    "title": "Streamlined Releases and Toast Notification Enhancements"
+  },
+  {
+    "version": "0.1.3",
+    "date": "2025-05-10T14:48:00.000Z",
+    "changes": [
+      "Handled toasts for dark and light themes.",
+      "Added a changelog.",
+      "Bumped version to 0.1.2.",
+      "Updated the release script.",
+      "Ignored warnings in the code.",
+      "Fixed unspecified issues.",
+      "Updated some scripts.",
+      "Updated lock file."
+    ],
+    "title": "Theme-Aware Toasts and Changelog Added"
+  },
+  {
+    "version": "0.1.2",
+    "date": "2025-05-10T14:48:00.000Z",
+    "changes": [
+      "Added and updated release scripts and changelog for version management.",
+      "Implemented and enhanced transcription and transformation error handling and transcription display features.",
+      "Added onboarding flow with login, verification, language selection, and localization support.",
+      "Integrated audio playback and recording capabilities with microphone handling and audio visualization improvements.",
+      "Allowed switching between different AI conversation personas and models, including local and OpenAI models, with CRUD operations on personas.",
+      "Implemented conversation history management with display, deletion, and context integration.",
+      "Added multi-language support including language selection in settings and onboarding components.",
+      "Added clipboard functionality for copying text and saving screenshots within the app, with shortcuts for these actions.",
+      "Improved UI and UX with updated styles, window resizing, transparency, and layout adjustments.",
+      "Integrated Sentry for error tracking and logging improvements.",
+      "Added support for macOS with appropriate permissions and entitlements for microphone and screen capture.",
+      "Implemented tray menu improvements including device and language selection from the tray.",
+      "Implemented global shortcuts handling and recording related shortcut management.",
+      "Enhanced model downloading with progress updates, confirmation modals, and notifications.",
+      "Refactored application architecture including state machines, app state extraction, and component refactoring for cleaner and scalable code.",
+      "Updated build and release workflows to use Ubuntu 22.04/24.04 and updated packaging process.",
+      "Added vulkan and metal support for whisper-rs with related SDK updates.",
+      "Removed unused code, optimized performance, and fixed various bugs throughout the application."
+    ],
+    "title": "AI Personas, Audio Recording, and Multilingual Onboarding"
+  },
+  {
+    "version": "0.1.1",
+    "date": "2025-05-10T14:48:00.000Z",
+    "changes": [
+      "Added updater"
+    ],
+    "title": "Seamless Updates With New Updater Feature"
+  }
+]

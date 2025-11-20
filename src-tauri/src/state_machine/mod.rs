@@ -1,0 +1,30 @@
+// Re-export the state machine components
+pub mod account;
+pub mod challenges;
+pub mod errors;
+pub mod events;
+pub mod history;
+pub mod models;
+pub mod new_app;
+pub mod new_conversation;
+pub mod new_kobold_server;
+pub mod new_mcp_processor;
+pub mod new_models;
+pub mod new_onboarding_window;
+pub mod new_personas;
+pub mod new_recording_window;
+pub mod new_settings_window;
+pub mod new_shortcuts;
+pub mod new_update;
+pub mod permissions;
+pub mod personas;
+pub mod processor;
+pub mod releases;
+pub mod state;
+pub mod types;
+pub mod websocket_server;
+// Re-export the main types
+pub use events::Event;
+pub use state::{AppState, OnboardingWindowState, RecordingWindowState, SettingsWindowState};
+pub use types::InterfaceTheme;
+pub use types::Language;

@@ -1,0 +1,22 @@
+{
+  "noPersona": "No Persona",
+  "image": "image",
+  "copy": "Copy",
+  "copied": "Copied",
+  "takeScreenshot": "Screenshot",
+  "copyText": "Copy Text",
+  "record": "Record",
+  "stop": "Stop",
+  "close": "Close",
+  "selectPersona": "Select Persona",
+  "connected": "Connected",
+  "disconnected": "Disconnected",
+  "recentConversations": "Recent",
+  "startNewConversationByTalkingOrWriting": "Start chatting now! Speak by clicking the mic or using your keyboard shortcut, or simply type your message below.",
+  "fileUploadError": "For now, only image files are supported.",
+  "startNewConversation": "Start new chat",
+  "recentChats": "Recent chats",
+  "switchLanguage": "Switch language",
+  "selectLanguage": "Select language",
+  "currentLanguage": "Current language"
+}

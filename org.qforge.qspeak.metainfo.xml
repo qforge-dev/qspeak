@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+    <id>org.qforge.qspeak</id>
+    <metadata_license>CC0-1.0</metadata_license>
+    <project_license>MIT</project_license>
+    <name>qSpeak</name>
+    <summary>A voice recording and transcription application</summary>
+
+    <description>
+        <p>
+            qSpeak is a Tauri-based application that provides voice recording and transcription
+            capabilities.
+            Built with modern web technologies and Rust, it offers a clean and efficient interface
+            for
+            audio recording tasks.
+        </p>
+    </description>
+
+    <icon type="stock">org.qforge.qspeak</icon>
+
+    <url type="homepage">https://github.com/qforge/qspeak</url>
+    <url type="bugtracker">https://github.com/qforge/qspeak/issues</url>
+
+    <developer_name>qForge</developer_name>
+
+    <launchable type="desktop-id">org.qforge.qspeak.desktop</launchable>
+
+    <categories>
+        <category>AudioVideo</category>
+        <category>Audio</category>
+        <category>Recorder</category>
+    </categories>
+
+    <releases>
+        <release version="0.2.11" date="2025-11-20">
+            <description>
+                <p>Current release of qSpeak</p>
+            </description>
+        </release>
+    </releases>
+
+    <content_rating type="oars-1.1" />
+</component> 

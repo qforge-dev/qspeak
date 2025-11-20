@@ -1,0 +1,117 @@
+[package]
+name = "qspeak"
+version = "0.2.11"
+description = "A Tauri App"
+authors = ["Dawid Kielbasa", "Pawel Sierant", "Marta Szczepaniak", "Michal Warda"]
+edition = "2025"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[lib]
+# The `_lib` suffix may seem redundant but it is necessary
+# to make the lib name unique and wouldn't conflict with the bin name.
+# This seems to be only an issue on Windows, see https://github.com/rust-lang/cargo/issues/8519
+name = "qspeak_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[workspace]
+members = ["qspeak-audio-player", "qspeak-audio-recording", "qspeak-keyboard", "qspeak-screenshot"]
+
+[dependencies]
+qspeak-audio-player = { path = "./qspeak-audio-player" }
+qspeak-screenshot = { path = "./qspeak-screenshot" }
+qspeak-keyboard = { path = "./qspeak-keyboard" }
+qspeak-audio-recording = { path = "./qspeak-audio-recording" }
+
+tauri = { version = "2", features = ["image-png", "macos-private-api", "tray-icon"] }
+tauri-plugin-opener = "2"
+tauri-plugin-store = "2"
+tauri-plugin-fs = "2"
+tauri-plugin-shell = "2"
+tauri-plugin-devtools = "2.0.0"
+tauri-plugin-sentry = "0.4.1"
+tauri-plugin-log = "2"
+
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+
+# State machine dependencies
+strum = { version = "0.25", features = ["derive"] }
+strum_macros = "0.25"
+tokio = { version = "1.45", features = ["full"] }
+# Audio recording dependencies
+hound = "3.5.1"
+qruhear = "0.1.1"
+anyhow = "1.0.75"
+chrono = { version = "0.4.31", features = ["serde"] }
+hf-hub = "0.4.1"
+uuid = { version = "1.16.0", features = ["v4"] }
+reqwest = { version = "0.11", features = ["json", "multipart", "stream", "blocking"] }
+futures-util = "0.3"
+async-stream = "0.3"
+base64 = "0.21.5"
+get-selected-text = "0.1.6"
+parking_lot = "0.12.3"
+json-patch = "4.0.0"
+lazy_static = "1.5.0"
+ctrlc = { version = "3.4.6", features = ["termination"] }
+signal-hook = "0.3.4"
+kill_tree = "0.2"
+device_query = "4.0.0"
+rmcp = { version = "0.1.5", features = ["client", "transport-child-process", "transport-io", "transport-sse", "transport-sse-server"] }
+eventsource-stream = "0.2.3"
+log = "0.4"
+tokio-tungstenite = "0.21"
+
+[target.aarch64-apple-darwin]
+rustflags = "-lc++ -l framework=Accelerate"
+
+[env]
+MACOSX_DEPLOYMENT_TARGET = "10.15" 
+
+[target.'cfg(not(any(target_os = "android", target_os = "ios")))'.dependencies]
+tauri-plugin-global-shortcut = "2"
+tauri-plugin-positioner = "2"
+tauri-plugin-single-instance = "2"
+tauri-plugin-updater = "2"
+
+[target.'cfg(target_os = "windows")'.dependencies]
+whisper-rs = { version = "0.13.0", features = ["vulkan"] }
+windows = { version = "0.56", features = ["Devices_Enumeration", "Win32_UI_Shell", "implement"] }
+cpal = "0.15.2"
+
+[target.'cfg(all(target_os = "linux", not(target_arch = "arm")))'.dependencies]
+whisper-rs = { version = "0.13.0", features = ["vulkan"] }
+cpal = { version = "0.15.2", features = [] }
+
+[target.'cfg(all(target_os = "linux", target_arch = "arm"))'.dependencies]
+whisper-rs = { version = "0.13.0", features = [] }
+cpal = { version = "0.15.2", features = [] }
+
+[target.'cfg(target_os = "macos")'.dependencies]
+whisper-rs = { version = "0.13.0", features = ["metal"] }
+objc2 = "0.6"
+objc2-foundation = "0.3"
+block2 = "0.6.1"
+macos-accessibility-client = "0.0.1"
+cpal = "0.15.2"
+
+# Set macOS deployment target
+[package.metadata.macos]
+deployment-target = "10.15"
+
+[profile.dev]
+debug = 0
+strip = "debuginfo"
+split-debuginfo = "unpacked"
+
+[profile.dev.build-override]
+opt-level = 3
+
+
+[profile.release]
+incremental = true
+debug = 1

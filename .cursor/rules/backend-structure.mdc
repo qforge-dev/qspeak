@@ -1,0 +1,57 @@
+---
+description: 
+globs: src-tauri/**
+alwaysApply: false
+---
+# Backend Structure Guide
+
+The backend is built with **Rust** and **Tauri 2.0**, providing native desktop functionality and system integrations.
+
+## Directory Structure
+
+### Core Backend ([src-tauri/src/](mdc:src-tauri/src))
+- **[main.rs](mdc:src-tauri/src/main.rs)** - Application entry point
+- **[lib.rs](mdc:src-tauri/src/lib.rs)** - Main library with Tauri setup and commands
+- **[feature_flags.rs](mdc:src-tauri/src/feature_flags.rs)** - Feature toggles and configuration
+- **[koboldcpp_server.rs](mdc:src-tauri/src/koboldcpp_server.rs)** - KoboldCPP server integration
+
+### Feature Modules
+- **[src-tauri/src/api/](mdc:src-tauri/src/api)** - API handlers and external integrations
+- **[src-tauri/src/llm/](mdc:src-tauri/src/llm)** - Large Language Model integration
+- **[src-tauri/src/state_machine/](mdc:src-tauri/src/state_machine)** - Application state management
+
+### Custom Crates
+- **[src-tauri/qspeak-audio-recording/](mdc:src-tauri/qspeak-audio-recording)** - Audio capture and processing
+- **[src-tauri/qspeak-keyboard/](mdc:src-tauri/qspeak-keyboard)** - Global hotkey handling
+- **[src-tauri/qspeak-screenshot/](mdc:src-tauri/qspeak-screenshot)** - Screen capture functionality
+- **[src-tauri/qspeak-audio-player/](mdc:src-tauri/qspeak-audio-player)** - Audio playback
+
+## Configuration Files
+
+### Build Configuration
+- **[src-tauri/Cargo.toml](mdc:src-tauri/Cargo.toml)** - Rust dependencies and project metadata
+- **[src-tauri/tauri.conf.json](mdc:src-tauri/tauri.conf.json)** - Tauri application configuration
+- **[src-tauri/build.rs](mdc:src-tauri/build.rs)** - Build script for custom compilation steps
+
+### Platform-Specific
+- **[src-tauri/Info.plist](mdc:src-tauri/Info.plist)** - macOS application info
+- **[src-tauri/entitlements.plist](mdc:src-tauri/entitlements.plist)** - macOS security entitlements
+- **[src-tauri/capabilities/](mdc:src-tauri/capabilities)** - Tauri security capabilities
+
+### Resources
+- **[src-tauri/icons/](mdc:src-tauri/icons)** - Application icons for different platforms
+- **[src-tauri/binaries/](mdc:src-tauri/binaries)** - External binaries bundled with the app
+- **[src-tauri/kobold-configs/](mdc:src-tauri/kobold-configs)** - KoboldCPP configuration files
+
+## Key Features Implemented
+- **Global Hotkeys**: System-wide keyboard shortcuts for voice activation
+- **Audio Processing**: Real-time voice recording and transcription
+- **LLM Integration**: Local AI model execution and inference
+- **Cross-Platform**: Windows, macOS, and Linux support
+- **System Integration**: Native OS features and file system access
+
+## Development Notes
+- Uses **Tauri 2.0** with the latest security model
+- All voice processing happens **locally** - no cloud dependencies
+- Modular architecture with separate crates for different functionalities
+- Follows Rust best practices with proper error handling and memory safety

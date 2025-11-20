@@ -1,0 +1,334 @@
+name: Tauri v2 Release Process
+on:
+  push:
+    tags:
+      - v*
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Version to release (e.g., v1.0.0)"
+        required: false
+        default: "manual-build"
+        type: string
+
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+  packages: write
+
+env:
+  CN_APPLICATION: "qforge/qspeak"
+
+jobs:
+  draft:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: create draft release
+        uses: crabnebula-dev/cloud-release@v0
+        with:
+          command: release draft ${{ env.CN_APPLICATION }} --framework tauri
+          api-key: ${{ secrets.CN_API_KEY }}
+
+  build_desktop:
+    needs: draft
+
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-22.04
+            target: x86_64-unknown-linux-gnu
+            arch: x64
+          # - os: ubuntu-22.04
+          #   target: armv7-unknown-linux-gnueabihf
+          #   arch: armhf
+          - os: macos-latest
+            target: universal
+            arch: universal
+          - os: windows-latest
+            target: x86_64-pc-windows-msvc
+            arch: x64
+
+    runs-on: ${{ matrix.os }}
+
+    env:
+      APPLE_ID: ${{ secrets.APPLE_ID }}
+      APPLE_ID_PASSWORD: ${{ secrets.APPLE_ID_PASSWORD }}
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 9
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "lts/*"
+      - name: Get pnpm store directory
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+
+      - uses: actions/cache@v3
+        name: Setup pnpm cache
+        with:
+          path: ${{ env.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+      - name: Install stable toolchain (Non-macOS)
+        if: matrix.os != 'macos-latest'
+        uses: actions-rust-lang/setup-rust-toolchain@v1
+        with:
+          toolchain: stable
+          target: ${{ matrix.target }}
+          cache: true
+          cache-workspaces: "./src-tauri -> target"
+          cache-shared-key: ${{ matrix.os }}-${{ matrix.arch }}
+
+      - name: Install stable toolchain (macOS)
+        if: matrix.os == 'macos-latest'
+        uses: actions-rust-lang/setup-rust-toolchain@v1
+        with:
+          toolchain: stable
+          cache: true
+          cache-workspaces: "./src-tauri -> target"
+          cache-shared-key: ${{ matrix.os }}-${{ matrix.arch }}
+
+      - name: install Linux dependencies
+        if: matrix.os == 'ubuntu-22.04'
+        run: |
+          sudo apt-get update
+          if [ "${{ matrix.arch }}" == "armhf" ]; then
+            # Install cross-compilation tools for ARMv7
+            sudo apt-get install -y \
+              build-essential \
+              g++-arm-linux-gnueabihf \
+              libc6-dev-armhf-cross \
+              pkg-config
+            
+            # Add ARMhf architecture
+            sudo dpkg --add-architecture armhf
+            
+            # First, modify existing sources to be amd64 only
+            sudo sed -i 's/^deb /deb [arch=amd64] /' /etc/apt/sources.list
+            sudo sed -i 's/^deb-src /deb-src [arch=amd64] /' /etc/apt/sources.list
+            
+            # Configure ARM repositories using the ports mirror
+            sudo tee /etc/apt/sources.list.d/arm.sources << 'EOF'
+          Types: deb
+          URIs: http://ports.ubuntu.com/ubuntu-ports/
+          Suites: jammy jammy-updates jammy-backports jammy-security
+          Components: main universe restricted multiverse
+          Architectures: armhf
+          Signed-By: /usr/share/keyrings/ubuntu-archive-keyring.gpg
+          EOF
+            
+            sudo apt-get update
+            
+            # Install ARM-specific development libraries
+            sudo apt-get install -y \
+              libssl-dev:armhf \
+              libwebkit2gtk-4.1-dev:armhf \
+              libasound2-dev:armhf \
+              libvulkan-dev:armhf \
+              libayatana-appindicator3-dev:armhf \
+              libfl-dev:armhf \
+              libxdo-dev:armhf
+            
+            # Set up cross-compilation environment variables
+            echo "PKG_CONFIG_PATH=/usr/lib/arm-linux-gnueabihf/pkgconfig:/usr/share/pkgconfig" >> $GITHUB_ENV
+            echo "PKG_CONFIG_ALLOW_CROSS=1" >> $GITHUB_ENV
+            echo "PKG_CONFIG_SYSROOT_DIR=/usr/arm-linux-gnueabihf" >> $GITHUB_ENV
+            echo "PKG_CONFIG_ALLOW_SYSTEM_CFLAGS=1" >> $GITHUB_ENV
+            echo "CARGO_TARGET_ARMV7_UNKNOWN_LINUX_GNUEABIHF_LINKER=/usr/bin/arm-linux-gnueabihf-gcc" >> $GITHUB_ENV
+          else
+            # Install native x64 dependencies
+            sudo apt-get install -y webkit2gtk-4.1 libasound2-dev libvulkan-dev libayatana-appindicator3-dev libfl-dev libxdo-dev
+          fi
+      - name: Install Vulkan SDK
+        if: matrix.os != 'macos-latest'
+        uses: jakoch/install-vulkan-sdk-action@v1
+        with:
+          # Defaults to latest version, if version not set.
+          vulkan_version: 1.4.309.0
+        # optional_components: com.lunarg.vulkan.vma
+        # install_runtime: true
+        # cache: true
+        # stripdown: true
+
+        # # You can install a software rasterizer.
+        # install_swiftshader: true
+        # install_lavapipe: true
+      - name: build Tauri app for Windows, Linux
+        if: matrix.os != 'macos-latest'
+        shell: bash
+        run: |
+          pnpm install
+          if [ "${{ matrix.os }}" == "ubuntu-22.04" ]; then
+            if [ "${{ matrix.arch }}" == "armhf" ]; then
+              NO_STRIP=true pnpm tauri build --target ${{ matrix.target }} --bundles deb,rpm
+            else
+              NO_STRIP=true pnpm tauri build --bundles deb,rpm
+            fi
+          else
+            pnpm tauri build
+          fi
+        env:
+          TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
+          TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY_PASSWORD }}
+
+      # - name: Install Sentry CLI
+      #   run: |
+      #     curl -sL https://sentry.io/get-cli/ | bash
+
+      # - name: Upload Sentry debug symbols (Linux/Windows)
+      #   if: matrix.os != 'macos-latest'
+      #   run: |
+      #     sentry-cli upload-dif ./src-tauri/target/release/
+      #   env:
+      #     SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+      #     SENTRY_ORG: qforge
+      #     SENTRY_PROJECT: qspeak
+
+      - name: Import Apple Developer Certificate
+        if: matrix.os == 'macos-latest'
+        env:
+          APPLE_CERTIFICATE: ${{ secrets.APPLE_CERTIFICATE }}
+          APPLE_CERTIFICATE_PASSWORD: ${{ secrets.APPLE_CERTIFICATE_PASSWORD }}
+          KEYCHAIN_PASSWORD: ${{ secrets.KEYCHAIN_PASSWORD }}
+        run: |
+          echo $APPLE_CERTIFICATE | base64 --decode > certificate.p12
+          security create-keychain -p "$KEYCHAIN_PASSWORD" build.keychain
+          security default-keychain -s build.keychain
+          security unlock-keychain -p "$KEYCHAIN_PASSWORD" build.keychain
+          security set-keychain-settings -t 3600 -u build.keychain
+          security import certificate.p12 -k build.keychain -P "$APPLE_CERTIFICATE_PASSWORD" -T /usr/bin/codesign
+          security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k "$KEYCHAIN_PASSWORD" build.keychain
+          security find-identity -v -p codesigning build.keychain
+      - name: Verify Certificate
+        if: matrix.os == 'macos-latest'
+        run: |
+          CERT_INFO=$(security find-identity -v -p codesigning build.keychain | grep "Developer ID Application")
+          CERT_ID=$(echo "$CERT_INFO" | awk -F'"' '{print $2}')
+          echo "CERT_ID=$CERT_ID" >> $GITHUB_ENV
+          echo "Certificate imported."
+
+      - name: Write App Store Connect API key
+        if: matrix.os == 'macos-latest'
+        env:
+          ASC_PRIVATE_KEY_B64: ${{ secrets.APPLE_API_KEY_PATH }}
+        run: |
+          echo "$ASC_PRIVATE_KEY_B64" | base64 --decode > $RUNNER_TEMP/AuthKey.p8
+          echo "APPLE_API_KEY_PATH=$RUNNER_TEMP/AuthKey.p8" >> $GITHUB_ENV
+
+      - name: Install x86_64-apple-darwin for mac and build Tauri binaries
+        if: matrix.os == 'macos-latest'
+        run: |
+          rustup target add x86_64-apple-darwin
+          pnpm install
+          pnpm tauri build --target x86_64-apple-darwin
+          pnpm tauri build --target aarch64-apple-darwin
+        env:
+          APPLE_API_KEY: ${{ secrets.APPLE_API_KEY }}
+          APPLE_API_ISSUER: ${{ secrets.APPLE_API_ISSUER }}
+          APPLE_API_KEY_PATH: ${{ env.APPLE_API_KEY_PATH }}
+
+          APPLE_CERTIFICATE: ${{ secrets.APPLE_CERTIFICATE }}
+          APPLE_CERTIFICATE_PASSWORD: ${{ secrets.APPLE_CERTIFICATE_PASSWORD }}
+          APPLE_SIGNING_IDENTITY: ${{ env.CERT_ID }}
+          TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
+          TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY_PASSWORD }}
+
+      # - name: Upload Sentry debug symbols (macOS)
+      #   if: matrix.os == 'macos-latest'
+      #   run: |
+      #     sentry-cli upload-dif ./src-tauri/target/aarch64-apple-darwin/release/
+      #     sentry-cli upload-dif ./src-tauri/target/x86_64-apple-darwin/release/
+      #   env:
+      #     SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+      #     SENTRY_ORG: qforge
+      #     SENTRY_PROJECT: qspeak
+
+      - name: Verify aarch64 notarization ticket
+        if: matrix.os == 'macos-latest'
+        run: |
+          spctl -a -vv -t install \
+            ./src-tauri/target/aarch64-apple-darwin/release/bundle/macos/*.app
+
+      - name: Verify x86_64 notarization ticket
+        if: matrix.os == 'macos-latest'
+        run: |
+          spctl -a -vv -t install \
+            ./src-tauri/target/x86_64-apple-darwin/release/bundle/macos/*.app
+
+      - name: upload assets
+        uses: crabnebula-dev/cloud-release@v0
+        with:
+          command: release upload ${{ env.CN_APPLICATION }} --framework tauri
+          api-key: ${{ secrets.CN_API_KEY }}
+
+  publish:
+    needs: [build_desktop]
+
+    runs-on: ubuntu-22.04
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: publish release
+        uses: crabnebula-dev/cloud-release@v0
+        with:
+          command: release publish ${{ env.CN_APPLICATION }} --framework tauri
+          api-key: ${{ secrets.CN_API_KEY }}
+
+  create_github_release:
+    runs-on: ubuntu-22.04
+    needs: publish
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+
+      - name: Extract changelog for current version
+        run: |
+          node .github/scripts/extract-changelog.js
+
+      - name: Read release notes
+        id: release_notes
+        run: |
+          if [ -f "release-notes.md" ]; then
+            echo "RELEASE_NOTES<<EOF" >> $GITHUB_OUTPUT
+            cat release-notes.md >> $GITHUB_OUTPUT
+            echo "EOF" >> $GITHUB_OUTPUT
+          else
+            echo "RELEASE_NOTES=No changelog entry found for this version." >> $GITHUB_OUTPUT
+          fi
+
+      - name: Create GitHub Release
+        uses: actions/github-script@v7
+        with:
+          script: |
+            try {
+              const release = await github.rest.repos.createRelease({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                tag_name: context.ref.replace('refs/tags/', ''),
+                name: `Release ${context.ref.replace('refs/tags/', '')}`,
+                body: `${{ steps.release_notes.outputs.RELEASE_NOTES }}`,
+                draft: false,
+                prerelease: false
+              });
+              console.log(`Created release: ${release.data.html_url}`);
+            } catch (error) {
+              core.setFailed(`Failed to create release: ${error.message}`);
+            }

@@ -1,0 +1,8 @@
+[package]
+name = "qspeak-screenshot"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+fast_image_resize = { version = "5.1.2", features = ["rayon"] }
+screenshots = "0.8.4"

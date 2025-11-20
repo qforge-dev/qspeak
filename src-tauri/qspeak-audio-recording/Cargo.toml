@@ -1,0 +1,11 @@
+[package]
+name = "qspeak-audio-recording"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+cpal = "0.15.2"
+hound = "3.5.1"
+log = "0.4"
+qruhear = "0.1.0"
+ffmpeg-sidecar = "2.0.6"

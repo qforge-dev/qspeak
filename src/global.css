@@ -1,0 +1,389 @@
+@import "tailwindcss";
+
+@plugin 'tailwindcss-animate';
+
+/* GeistSans Font Faces */
+@font-face {
+  font-family: "GeistSans";
+  src: url("/fonts/Geist/webfonts/Geist[wght].woff2") format("woff2-variations");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "GeistSans";
+  src: url("/fonts/Geist/webfonts/Geist-Italic[wght].woff2") format("woff2-variations");
+  font-weight: 100 900;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* GeistSans Fallback Font Faces */
+@font-face {
+  font-family: "GeistSans Fallback";
+  src: url("/fonts/Geist/webfonts/Geist-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "GeistSans Fallback";
+  src: url("/fonts/Geist/webfonts/Geist-Medium.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "GeistSans Fallback";
+  src: url("/fonts/Geist/webfonts/Geist-SemiBold.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "GeistSans Fallback";
+  src: url("/fonts/Geist/webfonts/Geist-Bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+  --color-background: hsl(var(--background));
+  --color-background-surface: hsl(var(--background-surface));
+  --color-background-surface-high: hsl(var(--background-surface-high));
+  --color-background-surface-highest: hsl(var(--background-surface-highest));
+  --color-background-surface-highlight: hsl(var(--background-surface-highlight));
+  --color-background-surface-highlight-high: hsl(var(--background-surface-highlight-high));
+  --color-foreground: hsl(var(--foreground));
+
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+
+  --color-popover: hsl(var(--popover));
+  --color-popover-foreground: hsl(var(--popover-foreground));
+
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+
+  --color-secondary: hsl(var(--secondary));
+  --color-secondary-foreground: hsl(var(--secondary-foreground));
+
+  --color-tertiary: hsl(var(--tertiary));
+  --color-tertiary-foreground: hsl(var(--tertiary-foreground));
+
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+
+  --color-destructive: hsl(var(--destructive));
+  --color-destructive-foreground: hsl(var(--destructive-foreground));
+
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  --color-ring: hsl(var(--ring));
+
+  --color-chart-1: hsl(var(--chart-1));
+  --color-chart-2: hsl(var(--chart-2));
+  --color-chart-3: hsl(var(--chart-3));
+  --color-chart-4: hsl(var(--chart-4));
+  --color-chart-5: hsl(var(--chart-5));
+
+  --color-sidebar: hsl(var(--sidebar-background));
+  --color-sidebar-foreground: hsl(var(--sidebar-foreground));
+  --color-sidebar-primary: hsl(var(--sidebar-primary));
+  --color-sidebar-primary-foreground: hsl(var(--sidebar-primary-foreground));
+  --color-sidebar-accent: hsl(var(--sidebar-accent));
+  --color-sidebar-accent-foreground: hsl(var(--sidebar-accent-foreground));
+  --color-sidebar-border: hsl(var(--sidebar-border));
+  --color-sidebar-ring: hsl(var(--sidebar-ring));
+
+  --color-violet: hsl(var(--violet));
+  --color-yellow: hsl(var(--yellow));
+  --color-teal: hsl(var(--teal));
+
+  --radius-lg: var(--radius);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-sm: calc(var(--radius) - 4px);
+
+  --animate-accordion-down: accordion-down 0.2s ease-out;
+  --animate-accordion-up: accordion-up 0.2s ease-out;
+
+  --window-header-height: 32px;
+
+  @keyframes accordion-down {
+    from {
+      height: 0;
+    }
+    to {
+      height: var(--radix-accordion-content-height);
+    }
+  }
+  @keyframes accordion-up {
+    from {
+      height: var(--radix-accordion-content-height);
+    }
+    to {
+      height: 0;
+    }
+  }
+
+  @keyframes thinking-dots-1 {
+    0% {
+      opacity: 1;
+    }
+    75% {
+      opacity: 1;
+    }
+    75.1%,
+    100% {
+      opacity: 0;
+    }
+  }
+
+  @keyframes thinking-dots-2 {
+    0%,
+    24.9% {
+      opacity: 0;
+    }
+    25%,
+    75% {
+      opacity: 1;
+    }
+    75.1%,
+    100% {
+      opacity: 0;
+    }
+  }
+
+  @keyframes thinking-dots-3 {
+    0%,
+    49.9% {
+      opacity: 0;
+    }
+    50%,
+    75% {
+      opacity: 1;
+    }
+    75.1%,
+    100% {
+      opacity: 0;
+    }
+  }
+}
+
+/*
+  The default border color has changed to `currentColor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentColor);
+  }
+}
+
+@layer utilities {
+  body {
+    font-family: GeistSans, "GeistSans Fallback", Helvetica, sans-serif;
+    background-color: var(--color-background);
+  }
+
+  .animation-delay-200 {
+    animation-delay: 0.2s;
+  }
+
+  .animation-delay-400 {
+    animation-delay: 0.4s;
+  }
+
+  .animate-thinking-dots {
+    animation: thinking-dots 1.5s infinite;
+  }
+
+  .animate-thinking-dots-1 {
+    animation: thinking-dots-1 1.2s infinite;
+  }
+
+  .animate-thinking-dots-2 {
+    animation: thinking-dots-2 1.2s infinite;
+  }
+
+  .animate-thinking-dots-3 {
+    animation: thinking-dots-3 1.2s infinite;
+  }
+
+  .scrollbar-thin,
+  textarea {
+    scrollbar-width: thin;
+  }
+
+  .scrollbar-custom,
+  textarea {
+    @apply [&::-webkit-scrollbar]:w-2
+           [&::-webkit-scrollbar-track]:bg-transparent
+           [&::-webkit-scrollbar-thumb]:bg-muted-foreground/20
+           [&::-webkit-scrollbar-thumb]:rounded-full
+           [&::-webkit-scrollbar-thumb]:border-2
+           [&::-webkit-scrollbar-thumb]:border-background-surface-high
+           [&:hover::-webkit-scrollbar-thumb]:bg-muted-foreground/30
+           [&::-webkit-scrollbar-thumb:hover]:bg-muted-foreground/40
+           [&::-webkit-scrollbar-thumb:active]:bg-muted-foreground/50;
+  }
+
+  .scrollbar-custom-thick {
+    @apply [&::-webkit-scrollbar]:w-3
+           [&::-webkit-scrollbar-track]:bg-background-surface
+           [&::-webkit-scrollbar-thumb]:bg-muted-foreground/25
+           [&::-webkit-scrollbar-thumb]:rounded-full
+           [&::-webkit-scrollbar-thumb]:border-2
+           [&::-webkit-scrollbar-thumb]:border-background
+           [&:hover::-webkit-scrollbar-thumb]:bg-muted-foreground/35
+           [&::-webkit-scrollbar-thumb:hover]:bg-muted-foreground/45
+           [&::-webkit-scrollbar-thumb:active]:bg-muted-foreground/55;
+  }
+
+  .scrollbar-primary {
+    @apply [&::-webkit-scrollbar]:w-2
+           [&::-webkit-scrollbar-track]:bg-transparent
+           [&::-webkit-scrollbar-thumb]:bg-primary/20
+           [&::-webkit-scrollbar-thumb]:rounded-full
+           [&::-webkit-scrollbar-thumb]:border-2
+           [&::-webkit-scrollbar-thumb]:border-background
+           [&:hover::-webkit-scrollbar-thumb]:bg-primary/30
+           [&::-webkit-scrollbar-thumb:hover]:bg-primary/40
+           [&::-webkit-scrollbar-thumb:active]:bg-primary/50;
+  }
+}
+
+@layer base {
+  :root {
+    --violet: 252 63% 69%;
+    --yellow: 16 100% 60%;
+    --teal: 182 94% 39%;
+
+    --background: 210, 20%, 98%;
+    --background-surface: 210, 20%, 96%;
+    --background-surface-high: 210, 20%, 92%;
+    --background-surface-highest: 210, 20%, 89%;
+    --background-surface-highlight: 210, 20%, 85%;
+    --background-surface-highlight-high: 210, 20%, 82%;
+    --foreground: 221, 39%, 11%;
+    --card: 40, 15%, 93%;
+    --card-foreground: 300 5% 11%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 300 5% 11%;
+    --primary: var(--violet);
+    --primary-foreground: 0 0% 100%;
+    --secondary: var(--teal);
+    --secondary-foreground: 0 0% 100%;
+    --tertiary: var(--yellow);
+    --tertiary-foreground: 0, 0%, 100%;
+    --muted: 40, 18%, 91%;
+    --muted-foreground: 210, 5%, 45%;
+    --accent: 210, 20%, 92%;
+    --accent-foreground: 281, 41%, 13%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 60 9.1% 97.8%;
+    --border: 20 5.9% 93%;
+    --input: 20 5.9% 90%;
+    --ring: var(--primary);
+    --radius: 0.5rem;
+    --chart-1: 12 76% 61%;
+    --chart-2: 173 58% 39%;
+    --chart-3: 197 37% 24%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
+  }
+
+  .dark {
+    --violet: 252 63% 69%;
+    --yellow: 61 100% 50%;
+    --teal: 182 94% 39%;
+
+    --background: 221, 39%, 11%;
+    --background-surface: 221, 39%, 13%;
+    --background-surface-high: 221, 39%, 15%;
+    --background-surface-highest: 221, 39%, 18%;
+    --background-surface-highlight: 221, 39%, 20%;
+    --background-surface-highlight-high: 221, 39%, 24%;
+    --foreground: 0 0% 100%;
+    --card: 0 0% 15%;
+    --card-foreground: 0 0% 100%;
+    --popover: 221, 39%, 17%;
+    --popover-foreground: 0 0% 100%;
+    --primary: var(--teal);
+    --primary-foreground: 0, 0%, 100%;
+    --secondary: var(--violet);
+    --secondary-foreground: 0 0% 100%;
+    --tertiary: var(--yellow);
+    --tertiary-foreground: 0, 0%, 10%;
+    --muted: 40 4% 14%;
+    --muted-foreground: 0, 0%, 72%;
+    --accent: 221, 39%, 20%;
+    --accent-foreground: 0, 0%, 100%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 221, 39%, 15%;
+    --input: 221, 39%, 20%;
+    --ring: var(--primary);
+    --chart-1: 220 70% 50%;
+    --chart-2: 160 60% 45%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+.no-drag {
+  -webkit-app-region: no-drag;
+}
+
+.draggable {
+  -webkit-app-region: drag;
+}
+
+.shake {
+  animation: shake 0.3s ease-in-out;
+}
+
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-4px);
+  }
+  75% {
+    transform: translateX(4px);
+  }
+}
+
+.thinking {
+  @apply bg-secondary/20 text-secondary-foreground italic px-2 py-1 rounded-md;
+}

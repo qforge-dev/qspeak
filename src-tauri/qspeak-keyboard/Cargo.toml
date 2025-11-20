@@ -1,0 +1,9 @@
+[package]
+name = "qspeak-keyboard"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+enigo = { version = "0.3.0", features = ["wayland"] }
+lazy_static = "1.4.0"
+arboard = "3.3.0"

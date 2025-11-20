@@ -1,0 +1,201 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+python3 - "$@" <<'PY'
+import argparse
+import base64
+import json
+import os
+import socket
+import struct
+import sys
+
+DEFAULT_HOST = "127.0.0.1"
+DEFAULT_PORT = 4456
+DEFAULT_TIMEOUT = 5.0
+
+ACTIONS = {
+    "toggle-recording": "toggle_recording",
+    "toggle_personas": "show_personas",
+    "toggle-personas": "show_personas",
+    "show-personas": "show_personas",
+    "show_personas": "show_personas",
+    "open-personas": "show_personas",
+    "open_personas": "show_personas",
+    "close-recording-window": "close_recording_window",
+    "close_recording_window": "close_recording_window",
+    "persona-cycle-end": "persona_cycle_end",
+    "persona_cycle_end": "persona_cycle_end",
+    "persona-cycle-next": "persona_cycle_next",
+    "persona_cycle_next": "persona_cycle_next",
+    "take-screenshot": "take_screenshot",
+    "take_screenshot": "take_screenshot",
+    "screenshot": "take_screenshot",
+    "copy-text": "copy_text",
+    "copy_text": "copy_text",
+    "toggle-minimized": "toggle_minimized",
+    "toggle_minimized": "toggle_minimized",
+    "switch-language": "switch_language",
+    "switch_language": "switch_language",
+}
+
+ACTIONS_HELP = "\n".join(
+    [
+        "Available actions:",
+        "  toggle-recording          Start/stop recording",
+        "  toggle-personas           Show the persona picker",
+        "  close-recording-window    Close the recording window",
+        "  persona-cycle-end         Finish persona cycling",
+        "  persona-cycle-next        Cycle to the next persona",
+        "  take-screenshot           Capture a screenshot",
+        "  copy-text                 Copy transcribed text",
+        "  toggle-minimized          Toggle minimized state",
+        "  switch-language           Cycle preferred languages",
+    ]
+)
+
+def normalize_action(value: str) -> str:
+    cleaned = value.strip().lower().replace(" ", "-").replace("_", "-")
+    if not cleaned:
+        raise argparse.ArgumentTypeError("action cannot be empty")
+    if cleaned not in ACTIONS:
+        raise argparse.ArgumentTypeError(
+            f"Unknown action '{value}'. Use --help to see the list of supported actions."
+        )
+    return ACTIONS[cleaned]
+
+def build_frame(payload: bytes) -> bytes:
+    frame = bytearray()
+    frame.append(0x81)  # FIN + text frame
+
+    length = len(payload)
+    if length <= 125:
+        frame.append(0x80 | length)
+    elif length < (1 << 16):
+        frame.append(0x80 | 126)
+        frame.extend(struct.pack(">H", length))
+    else:
+        frame.append(0x80 | 127)
+        frame.extend(struct.pack(">Q", length))
+
+    mask = os.urandom(4)
+    frame.extend(mask)
+    frame.extend(bytes(b ^ mask[index % 4] for index, b in enumerate(payload)))
+    return bytes(frame)
+
+def receive_frame(sock: socket.socket, buffer: bytearray) -> bytes:
+    def read_exact(count: int) -> bytes:
+        while len(buffer) < count:
+            chunk = sock.recv(4096)
+            if not chunk:
+                raise RuntimeError("Connection closed while waiting for data")
+            buffer.extend(chunk)
+        data = bytes(buffer[:count])
+        del buffer[:count]
+        return data
+
+    header = read_exact(2)
+    fin = header[0] & 0x80
+    opcode = header[0] & 0x0F
+    if not fin:
+        raise RuntimeError("Fragmented frames are not supported")
+    if opcode == 0x8:
+        raise RuntimeError("Connection closed by server")
+    if opcode != 0x1:
+        raise RuntimeError(f"Unsupported opcode: {opcode}")
+
+    has_mask = header[1] & 0x80
+    length = header[1] & 0x7F
+
+    if length == 126:
+        length = struct.unpack(">H", read_exact(2))[0]
+    elif length == 127:
+        length = struct.unpack(">Q", read_exact(8))[0]
+
+    mask = read_exact(4) if has_mask else None
+    payload = read_exact(length)
+
+    if mask:
+        payload = bytes(b ^ mask[index % 4] for index, b in enumerate(payload))
+
+    return payload
+
+def perform_handshake(sock: socket.socket, host: str, port: int) -> bytearray:
+    key = base64.b64encode(os.urandom(16)).decode("ascii")
+    handshake = (
+        f"GET / HTTP/1.1\r\n"
+        f"Host: {host}:{port}\r\n"
+        "Upgrade: websocket\r\n"
+        "Connection: Upgrade\r\n"
+        f"Sec-WebSocket-Key: {key}\r\n"
+        "Sec-WebSocket-Version: 13\r\n"
+        "\r\n"
+    )
+    sock.sendall(handshake.encode("utf-8"))
+
+    response = bytearray()
+    while b"\r\n\r\n" not in response:
+        chunk = sock.recv(4096)
+        if not chunk:
+            raise RuntimeError("Connection closed during handshake")
+        response.extend(chunk)
+
+    header_blob, remainder = response.split(b"\r\n\r\n", 1)
+    status_line = header_blob.split(b"\r\n", 1)[0].decode("utf-8", "replace").strip()
+    if "101" not in status_line:
+        raise RuntimeError(f"WebSocket handshake failed: {status_line}")
+
+    return bytearray(remainder)
+
+def send_command(host: str, port: int, timeout: float, payload: dict) -> dict:
+    data = json.dumps(payload).encode("utf-8")
+
+    with socket.create_connection((host, port), timeout=timeout) as sock:
+        sock.settimeout(timeout)
+        buffer = perform_handshake(sock, host, port)
+
+        frame = build_frame(data)
+        sock.sendall(frame)
+
+        message = receive_frame(sock, buffer)
+        try:
+            return json.loads(message.decode("utf-8"))
+        except json.JSONDecodeError as err:
+            raise RuntimeError(f"Invalid JSON response: {err}") from err
+
+def main(argv: list[str]) -> int:
+    parser = argparse.ArgumentParser(
+        description=f"Send remote commands to the qSpeak WebSocket server.\n\n{ACTIONS_HELP}",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+    )
+    parser.add_argument("action", type=normalize_action, help="command to execute (e.g. toggle-recording)")
+    parser.add_argument("--host", default=DEFAULT_HOST, help=f"target host (default: {DEFAULT_HOST})")
+    parser.add_argument("--port", type=int, default=DEFAULT_PORT, help=f"target port (default: {DEFAULT_PORT})")
+    parser.add_argument("--password", default=None, help="password for the WebSocket server")
+    parser.add_argument("--timeout", type=float, default=DEFAULT_TIMEOUT, help=f"connection timeout in seconds (default: {DEFAULT_TIMEOUT})")
+
+    args = parser.parse_args(argv)
+
+    payload = {"action": args.action}
+    if args.password is not None:
+        payload["password"] = args.password
+
+    try:
+        response = send_command(args.host, args.port, args.timeout, payload)
+    except Exception as err:  # noqa: BLE001
+        print(f"Error: {err}", file=sys.stderr)
+        return 1
+
+    message = response.get("message", "")
+    if response.get("success"):
+        if message:
+            print(message)
+        return 0
+
+    print(f"Command failed: {message or 'unknown error'}", file=sys.stderr)
+    return 1
+
+if __name__ == "__main__":
+    sys.exit(main(sys.argv[1:]))
+PY

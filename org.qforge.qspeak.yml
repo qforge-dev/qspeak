@@ -1,0 +1,61 @@
+id: org.qforge.qspeak
+runtime: org.gnome.Platform
+runtime-version: "46"
+sdk: org.gnome.Sdk
+add-extensions:
+  org.freedesktop.Platform.ffmpeg-full:
+    directory: lib/ffmpeg
+    version: "23.08"
+    add-ld-path: .
+
+command: qspeak
+
+finish-args:
+  - --socket=wayland # Permission needed to show the window
+  - --socket=fallback-x11 # Permission needed to show the window
+  - --device=dri # OpenGL acceleration
+  - --share=ipc # Inter-process communication
+  - --share=network # Network access if needed
+  - --filesystem=home # File system access for recording/saving files
+  - --talk-name=org.freedesktop.Notifications # For notifications
+  - --socket=pulseaudio # Audio access for recording
+  - --system-talk-name=org.freedesktop.UPower # System information
+  - --talk-name=org.freedesktop.secrets # Keyring access
+
+modules:
+  - shared-modules/libayatana-appindicator/libayatana-appindicator-gtk3.json
+  - shared-modules/libappindicator/libappindicator-gtk3-12.10.json
+  - name: xdotool
+    sources:
+      - type: archive
+        url: https://github.com/jordansissel/xdotool/releases/download/v3.20211022.1/xdotool-3.20211022.1.tar.gz
+        sha256: 96f0facfde6d78eacad35b91b0f46fecd0b35e474c03e00e30da3fdd345f9ada
+    buildsystem: simple
+    build-commands:
+      - make PREFIX=/app
+      - make PREFIX=/app install
+  - name: qspeak
+    buildsystem: simple
+    sources:
+      - type: file
+        url: https://cdn.crabnebula.app/asset/01JVYQ7R004Y0J540PDRZMVM69
+        sha256: d622413383231574f7d8157ca0f22f5e59c1b693c450ad24a66f802beff630bf
+        only-arches: [x86_64]
+        dest-filename: qspeak.deb
+      - type: file
+        path: org.qforge.qspeak.metainfo.xml
+    build-commands:
+      - ar -x qspeak.deb
+      - tar -xf data.tar.gz
+      - mkdir -p /app/etc
+      - echo "audio:x:29:" > /app/etc/group
+      - install -Dm755 usr/bin/qspeak /app/bin/qspeak
+      - install -Dm644 usr/share/applications/qSpeak.desktop /app/share/applications/org.qforge.qspeak.desktop
+      - install -Dm644 usr/share/icons/hicolor/16x16/apps/qspeak.png /app/share/icons/hicolor/16x16/apps/org.qforge.qspeak.png
+      - install -Dm644 usr/share/icons/hicolor/32x32/apps/qspeak.png /app/share/icons/hicolor/32x32/apps/org.qforge.qspeak.png
+      - install -Dm644 usr/share/icons/hicolor/96x96/apps/qspeak.png /app/share/icons/hicolor/96x96/apps/org.qforge.qspeak.png
+      - install -Dm644 usr/share/icons/hicolor/128x128/apps/qspeak.png /app/share/icons/hicolor/128x128/apps/org.qforge.qspeak.png
+      - install -Dm644 usr/share/icons/hicolor/192x192/apps/qspeak.png /app/share/icons/hicolor/192x192/apps/org.qforge.qspeak.png
+      - install -Dm644 org.qforge.qspeak.metainfo.xml /app/share/metainfo/org.qforge.qspeak.metainfo.xml
+      - mkdir -p /app/lib/ffmpeg
+      - cp -r usr/lib/qSpeak /app/lib/
